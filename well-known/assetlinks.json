@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "ru.hochu.app",
+        "sha256_cert_fingerprints": ["F3:BE:E6:37:10:29:61:70:0F:D5:3B:87:0C:F0:E8:0C:2E:47:65:1C:D5:37:BB:3D:FC:2D:6B:A5:CC:28:2C:16"]
+      }
+    }]
