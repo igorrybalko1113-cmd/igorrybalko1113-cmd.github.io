@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#F2F2F7" />
+<title>Хочу-хочу-хочу — презентация продукта</title>
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20rx='14'%20fill='%23000'/%3E%3Cpath%20fill='%23fff'%20fill-rule='evenodd'%20d='M24%2012%20C15%2014%208%2021%206%2030%20L10%2033%20L5%2037%20C9%2046%2017%2051%2027%2051%20C23%2044%2021%2037%2021%2031%20C21%2024%2022%2018%2024%2012%20Z%20M16.5%2026%20a3%203%200%201%201%20-6%200%20a3%203%200%201%201%206%200%20Z'/%3E%3Cg%20fill='none'%20stroke='%23fff'%20stroke-width='3'%20stroke-linecap='round'%3E%3Cpath%20d='M33%2014%20C29%2025%2029%2039%2031%2050'/%3E%3Cpath%20d='M40%2016%20C36.5%2026%2036.5%2038%2038%2048'/%3E%3Cpath%20d='M46%2019%20C43%2027%2043%2037%2044.5%2045'/%3E%3Cpath%20d='M51%2022%20C48.5%2028%2048.5%2036%2050%2042'/%3E%3Cpath%20d='M55.5%2025%20C53.5%2029%2053.5%2035%2055%2039'/%3E%3C/g%3E%3Cpath%20fill='%23fff'%20d='M57.5%2028%20L63%2022%20L61%2032%20Z%20M57.5%2036%20L63%2042%20L61%2032%20Z'/%3E%3C/svg%3E" />
+
+<style>
+/* ================= ПЕРЕМЕННЫЕ И БАЗА ================= */
+:root{
+  --bg:#F2F2F7;
+  --card:#FFFFFF;
+  --card2:#F2F2F7;
+  --text:#000000;
+  --text2:#8E8E93;
+  --blue:#007AFF;
+  --green:#34C759;
+  --red:#FF3B30;
+  --bar:rgba(0,0,0,.08);
+  --divider:rgba(0,0,0,.06);
+  --shadow:0 2px 6px rgba(0,0,0,.05), 0 12px 32px rgba(0,0,0,.07);
+  --shadow-sm:0 1px 3px rgba(0,0,0,.06);
+  --topbar:rgba(242,242,247,.82);
+  --softbtn:rgba(0,0,0,.06);
+  --phone-body:#1C1C1E;
+}
+html[data-theme="dark"]{
+  --bg:#000000;
+  --card:#1C1C1E;
+  --card2:#2C2C2E;
+  --text:#FFFFFF;
+  --text2:#8E8E93;
+  --bar:rgba(255,255,255,.14);
+  --divider:rgba(255,255,255,.08);
+  --shadow:none;
+  --shadow-sm:none;
+  --topbar:rgba(0,0,0,.82);
+  --softbtn:rgba(255,255,255,.1);
+  --phone-body:#2C2C2E;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;height:100%}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Inter","SF Pro Display","Segoe UI",Roboto,sans-serif;
+  background:var(--bg);color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  height:100dvh;display:flex;flex-direction:column;overflow:hidden;
+  transition:background .25s;
+}
+button{font-family:inherit}
+.green{color:var(--green)} .red{color:var(--red)} .blue{color:var(--blue)}
+
+/* ================= ШАПКА ================= */
+.topbar{
+  flex-shrink:0;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:10px 16px;padding-top:max(10px,env(safe-area-inset-top));
+  background:var(--topbar);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--divider);z-index:30;
+}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.brand-name{font-size:17px;font-weight:700;letter-spacing:-.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.logo-sm{width:32px;height:32px;border-radius:8px;display:block;flex-shrink:0}
+.logo-lg{width:72px;height:72px;border-radius:18px;display:block;flex-shrink:0;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.logo-bg{fill:#000}
+html[data-theme="dark"] .logo-bg{fill:#2C2C2E}
+.top-controls{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.seg{display:flex;background:var(--bar);border-radius:12px;padding:3px}
+.seg button{
+  border:none;background:transparent;color:var(--text2);
+  font-size:13px;font-weight:600;padding:6px 12px;border-radius:9px;cursor:pointer;transition:all .2s;
+}
+.seg button.on{background:var(--card);color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,.12)}
+html[data-theme="dark"] .seg button.on{box-shadow:none}
+.icon-btn{
+  width:36px;height:36px;border-radius:50%;border:none;background:var(--softbtn);
+  color:var(--text);display:flex;align-items:center;justify-content:center;cursor:pointer;
+  transition:transform .1s;
+}
+.icon-btn:active{transform:scale(.9)}
+
+/* ================= ВИДОВАЯ ОБЛАСТЬ ================= */
+#viewport{flex:1;position:relative;overflow:hidden}
+#deck{display:flex;height:100%;transition:transform .55s cubic-bezier(.22,.8,.36,1)}
+.slide{flex:0 0 100%;height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;display:flex}
+body.feed #viewport{overflow-y:auto}
+body.feed #deck{flex-direction:column;height:auto;transform:none!important;transition:none}
+body.feed .slide{height:auto;min-height:100%;border-bottom:1px solid var(--divider)}
+
+.slide-inner{
+  margin:auto;width:100%;max-width:860px;
+  padding:40px 24px 56px;
+  display:flex;flex-direction:column;gap:22px;align-items:center;text-align:center;
+}
+.kicker{
+  font-size:12px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;
+  color:var(--blue);margin:0;
+}
+h1{margin:0;font-size:clamp(30px,6vw,46px);font-weight:800;letter-spacing:-1px;line-height:1.08}
+h2{margin:0;font-size:clamp(25px,5vw,36px);font-weight:800;letter-spacing:-.7px;line-height:1.12}
+.lead{margin:0;font-size:clamp(15px,2.6vw,18px);line-height:1.55;color:var(--text2);max-width:620px}
+.lead b{color:var(--text)}
+
+/* Появление элементов */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .65s cubic-bezier(.22,.8,.36,1),transform .65s cubic-bezier(.22,.8,.36,1);transition-delay:var(--d,0s)}
+.slide.active .reveal{opacity:1;transform:none}
+
+/* ================= КАРТОЧКИ И СЕТКИ ================= */
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;width:100%;max-width:760px;text-align:left}
+.grid.one{grid-template-columns:1fr;max-width:560px}
+@media (max-width:640px){ .grid{grid-template-columns:1fr} }
+.card{
+  background:var(--card);border-radius:24px;padding:20px;box-shadow:var(--shadow);
+}
+.card h3{margin:0 0 6px;font-size:16px;font-weight:700;letter-spacing:-.2px}
+.card p{margin:0;font-size:14px;line-height:1.5;color:var(--text2)}
+.card-icon{
+  width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+  margin-bottom:12px;
+}
+.ci-blue{background:rgba(0,122,255,.12);color:var(--blue)}
+.ci-green{background:rgba(52,199,89,.12);color:var(--green)}
+.ci-red{background:rgba(255,59,48,.12);color:var(--red)}
+.ci-gray{background:var(--bar);color:var(--text2)}
+
+/* ================= СЛАЙД 1: ГЕРОЙ + МОКАП ================= */
+.hero{display:flex;align-items:center;justify-content:center;gap:44px;flex-wrap:wrap;width:100%}
+.hero-text{display:flex;flex-direction:column;gap:16px;align-items:center;text-align:center;max-width:420px}
+.hero-badges{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.pill{
+  display:inline-flex;align-items:center;gap:6px;border-radius:99px;
+  font-size:13px;font-weight:600;padding:7px 13px;
+}
+.pill-green{background:rgba(52,199,89,.13);color:var(--green)}
+.pill-red{background:rgba(255,59,48,.13);color:var(--red)}
+.pill-blue{background:rgba(0,122,255,.12);color:var(--blue)}
+.pill-gray{background:var(--bar);color:var(--text2)}
+
+.phone{
+  width:264px;flex-shrink:0;border-radius:40px;border:7px solid var(--phone-body);
+  background:var(--card);box-shadow:0 24px 60px rgba(0,0,0,.28);
+  padding:12px 12px 16px;position:relative;
+}
+.phone-notch{width:90px;height:22px;border-radius:0 0 14px 14px;background:var(--phone-body);margin:-12px auto 10px}
+.p-head{display:flex;align-items:center;gap:8px;padding:2px 4px 10px}
+.p-head .logo-sm{width:20px;height:20px;border-radius:5px}
+.p-title{font-size:13px;font-weight:700;letter-spacing:-.2px}
+.p-card{background:var(--card2);border-radius:16px;padding:12px;margin-bottom:10px;text-align:left}
+.p-card-top{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:8px}
+.p-card-top b{font-size:13.5px;letter-spacing:-.2px}
+.p-days{font-size:11px;color:var(--text2)}
+.p-bar{height:6px;border-radius:99px;background:var(--bar);overflow:hidden}
+.p-bar i{display:block;height:100%;border-radius:99px;background:var(--blue)}
+.p-bar i.g{background:var(--green)} .p-bar i.r{background:var(--red)}
+.p-sum{font-size:12.5px;font-weight:600;margin-top:8px}
+.p-sum span{color:var(--text2);font-weight:400}
+.p-badge{display:inline-flex;margin-top:8px;border-radius:99px;font-size:11px;font-weight:700;padding:4px 9px}
+.p-badge.green{background:rgba(52,199,89,.15);color:var(--green)}
+.p-badge.red{background:rgba(255,59,48,.15);color:var(--red)}
+
+/* ================= СЛАЙД 3: ФОРМУЛА ================= */
+.formula-card{width:100%;max-width:460px;text-align:left;padding:22px}
+.f-row{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:7px 0;font-size:15px}
+.f-row span{color:var(--text2)}
+.f-row b{font-weight:700;letter-spacing:-.2px}
+.f-div{height:1px;background:var(--divider);margin:8px 0}
+.f-eq{
+  margin-top:6px;background:rgba(0,122,255,.08);border-radius:16px;padding:14px 16px;
+  font-size:16px;font-weight:600;text-align:center;letter-spacing:-.2px;
+}
+.reserve-card{
+  width:100%;max-width:460px;display:flex;gap:14px;align-items:center;text-align:left;
+  background:var(--card);border-radius:24px;padding:18px 20px;box-shadow:var(--shadow);
+}
+.reserve-card .card-icon{margin:0;flex-shrink:0}
+.reserve-card div{font-size:14.5px;line-height:1.5}
+.status-chips{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.chip{
+  border-radius:16px;padding:12px 18px;font-size:14px;font-weight:700;letter-spacing:-.2px;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.chip-green{background:rgba(52,199,89,.14);color:var(--green)}
+.chip-red{background:rgba(255,59,48,.14);color:var(--red)}
+
+/* ================= СЛАЙД 4: ПЕРЕСЧЁТ ================= */
+.bullets{width:100%;max-width:600px;display:flex;flex-direction:column;gap:12px;text-align:left}
+.bullet{display:flex;gap:12px;align-items:flex-start;background:var(--card);border-radius:20px;padding:15px 17px;box-shadow:var(--shadow-sm)}
+.bullet .bi{flex-shrink:0;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(52,199,89,.14);color:var(--green);margin-top:1px}
+.bullet p{margin:0;font-size:14.5px;line-height:1.5;color:var(--text);opacity:.88}
+.bullet p b{opacity:1}
+.recalc-mock{
+  width:100%;max-width:460px;text-align:left;background:var(--card);border-radius:24px;
+  padding:20px;box-shadow:var(--shadow);border-left:5px solid var(--red);
+}
+.rm-head{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:var(--red);margin-bottom:10px}
+.rm-debt{font-size:15px;margin-bottom:8px}
+.rm-preview{font-size:13.5px;line-height:1.5;color:var(--text2);background:var(--card2);border-radius:14px;padding:12px 14px;margin-bottom:14px}
+.rm-preview b{color:var(--text)}
+.rm-btns{display:flex;gap:10px}
+.rm-btn{flex:1;text-align:center;border-radius:14px;padding:12px;font-size:14px;font-weight:700}
+.rm-btn.ghost{background:var(--bar);color:var(--text2)}
+.rm-btn.red{background:var(--red);color:#fff;box-shadow:0 6px 18px rgba(255,59,48,.35)}
+
+/* ================= СЛАЙД 5: ДАШБОРД ================= */
+.dash-mock{width:100%;max-width:460px;text-align:left;background:var(--card);border-radius:24px;padding:20px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:18px}
+.dm-title{font-size:12px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text2);margin-bottom:8px}
+.dm-row{display:flex;align-items:baseline;justify-content:space-between;gap:10px;font-size:14px;margin-bottom:8px}
+.dm-row span{color:var(--text2)}
+.dm-row b{font-weight:700;letter-spacing:-.2px}
+.dm-status{margin-top:9px;font-size:12.5px;font-weight:700;display:flex;align-items:center;gap:6px}
+.dm-status.green{color:var(--green)} .dm-status.red{color:var(--red)}
+
+/* ================= СЛАЙД 6: ПРИВАТНОСТЬ ================= */
+.feat-rows{width:100%;max-width:560px;display:flex;flex-direction:column;gap:12px;text-align:left}
+.feat{display:flex;gap:14px;align-items:center;background:var(--card);border-radius:20px;padding:15px 17px;box-shadow:var(--shadow-sm)}
+.feat .card-icon{margin:0;flex-shrink:0}
+.feat div b{display:block;font-size:15px;letter-spacing:-.2px;margin-bottom:2px}
+.feat div span{font-size:13px;color:var(--text2);line-height:1.45;display:block}
+
+/* ================= СЛАЙД 8: ФИНАЛ ================= */
+.thesis{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.thesis .pill{font-size:15px;padding:10px 18px}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.btn{
+  border:none;border-radius:18px;padding:16px 26px;font-size:16px;font-weight:700;cursor:pointer;
+  display:inline-flex;align-items:center;gap:9px;text-decoration:none;transition:transform .12s,opacity .12s;
+}
+.btn:active{transform:scale(.96);opacity:.9}
+.btn-primary{background:var(--blue);color:#fff;box-shadow:0 10px 28px rgba(0,122,255,.4)}
+.btn-secondary{background:var(--bar);color:var(--text)}
+.foot-note{font-size:12px;color:var(--text2)}
+
+/* ================= НИЖНЯЯ НАВИГАЦИЯ ================= */
+.navbar{
+  flex-shrink:0;display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:10px 16px;padding-bottom:max(10px,env(safe-area-inset-bottom));
+  background:var(--topbar);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);
+  border-top:1px solid var(--divider);z-index:30;
+}
+.nav-btn{
+  width:46px;height:46px;border-radius:50%;border:none;background:var(--blue);color:#fff;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  box-shadow:0 6px 18px rgba(0,122,255,.35);transition:transform .12s,opacity .2s;
+}
+.nav-btn:active{transform:scale(.92)}
+.nav-btn:disabled{background:var(--bar);color:var(--text2);box-shadow:none;cursor:default}
+.nav-center{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0}
+.prog-text{font-size:13px;font-weight:600;color:var(--text2);font-variant-numeric:tabular-nums}
+.prog-line{width:min(220px,60%);height:4px;border-radius:99px;background:var(--bar);overflow:hidden}
+.prog-line i{display:block;height:100%;border-radius:99px;background:var(--blue);transition:width .4s cubic-bezier(.22,.8,.36,1)}
+</style>
+</head>
+<body>
+
+<!-- ================= ШАПКА ================= -->
+<header class="topbar">
+  <div class="brand">
+    <svg class="logo-sm" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect class="logo-bg" width="64" height="64" rx="14" fill="#000"/>
+      <path fill="#FFF" fill-rule="evenodd" d="M24 12 C15 14 8 21 6 30 L10 33 L5 37 C9 46 17 51 27 51 C23 44 21 37 21 31 C21 24 22 18 24 12 Z M16.5 26 a3 3 0 1 1 -6 0 a3 3 0 1 1 6 0 Z"/>
+      <g fill="none" stroke="#FFF" stroke-linecap="round">
+        <path stroke-width="3" d="M33 14 C29 25 29 39 31 50"/>
+        <path stroke-width="2.8" d="M40 16 C36.5 26 36.5 38 38 48"/>
+        <path stroke-width="2.6" d="M46 19 C43 27 43 37 44.5 45"/>
+        <path stroke-width="2.4" d="M51 22 C48.5 28 48.5 36 50 42"/>
+        <path stroke-width="2.2" d="M55.5 25 C53.5 29 53.5 35 55 39"/>
+      </g>
+      <path fill="#FFF" d="M57.5 28 L63 22 L61 32 Z M57.5 36 L63 42 L61 32 Z"/>
+    </svg>
+    <span class="brand-name">Хочу-хочу-хочу</span>
+  </div>
+  <div class="top-controls">
+    <div class="seg" role="tablist" aria-label="Режим просмотра">
+      <button id="modeSlides" class="on" type="button">Слайды</button>
+      <button id="modeFeed" type="button">Лента</button>
+    </div>
+    <button id="themeBtn" class="icon-btn" type="button" aria-label="Переключить тему"></button>
+  </div>
+</header>
+
+<!-- ================= СЛАЙДЫ ================= -->
+<main id="viewport">
+<div id="deck">
+
+  <!-- ---------- СЛАЙД 1 ---------- -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="hero">
+        <div class="hero-text">
+          <svg class="logo-lg reveal" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect class="logo-bg" width="64" height="64" rx="14" fill="#000"/>
+            <path fill="#FFF" fill-rule="evenodd" d="M24 12 C15 14 8 21 6 30 L10 33 L5 37 C9 46 17 51 27 51 C23 44 21 37 21 31 C21 24 22 18 24 12 Z M16.5 26 a3 3 0 1 1 -6 0 a3 3 0 1 1 6 0 Z"/>
+            <g fill="none" stroke="#FFF" stroke-linecap="round">
+              <path stroke-width="3" d="M33 14 C29 25 29 39 31 50"/>
+              <path stroke-width="2.8" d="M40 16 C36.5 26 36.5 38 38 48"/>
+              <path stroke-width="2.6" d="M46 19 C43 27 43 37 44.5 45"/>
+              <path stroke-width="2.4" d="M51 22 C48.5 28 48.5 36 50 42"/>
+              <path stroke-width="2.2" d="M55.5 25 C53.5 29 53.5 35 55 39"/>
+            </g>
+            <path fill="#FFF" d="M57.5 28 L63 22 L61 32 Z M57.5 36 L63 42 L61 32 Z"/>
+          </svg>
+          <p class="kicker reveal" style="--d:.08s">Продуктовая презентация</p>
+          <h1 class="reveal" style="--d:.14s">Хочу-хочу-хочу</h1>
+          <p class="lead reveal" style="--d:.2s"><b>Превращаем импульсивные «хочу» в большие осознанные цели.</b> Приложение, которое помогает копить на мечту без стресса, сложных таблиц и привязки банковских счетов.</p>
+          <div class="hero-badges reveal" style="--d:.28s">
+            <span class="pill pill-green">Без чувства вины</span>
+            <span class="pill pill-blue">Офлайн</span>
+            <span class="pill pill-gray">₽ · $ · €</span>
+          </div>
+        </div>
+
+        <div class="phone reveal" style="--d:.34s" aria-hidden="true">
+          <div class="phone-notch"></div>
+          <div class="p-head">
+            <svg class="logo-sm" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><rect class="logo-bg" width="64" height="64" rx="14" fill="#000"/><path fill="#FFF" fill-rule="evenodd" d="M24 12 C15 14 8 21 6 30 L10 33 L5 37 C9 46 17 51 27 51 C23 44 21 37 21 31 C21 24 22 18 24 12 Z M16.5 26 a3 3 0 1 1 -6 0 a3 3 0 1 1 6 0 Z"/><g fill="none" stroke="#FFF" stroke-linecap="round"><path stroke-width="3" d="M33 14 C29 25 29 39 31 50"/><path stroke-width="2.8" d="M40 16 C36.5 26 36.5 38 38 48"/><path stroke-width="2.6" d="M46 19 C43 27 43 37 44.5 45"/><path stroke-width="2.4" d="M51 22 C48.5 28 48.5 36 50 42"/><path stroke-width="2.2" d="M55.5 25 C53.5 29 53.5 35 55 39"/></g><path fill="#FFF" d="M57.5 28 L63 22 L61 32 Z M57.5 36 L63 42 L61 32 Z"/></svg>
+            <span class="p-title">Хочу-хочу-хочу</span>
+          </div>
+          <div class="p-card">
+            <div class="p-card-top"><b>Отпуск на море</b><span class="p-days">230 дней</span></div>
+            <div class="p-bar"><i class="g" style="width:62%"></i></div>
+            <div class="p-sum">62 000 ₽ <span>из 100 000 ₽</span></div>
+            <span class="p-badge green">+11 дней в запасе</span>
+          </div>
+          <div class="p-card">
+            <div class="p-card-top"><b>Новый ноутбук</b><span class="p-days">96 дней</span></div>
+            <div class="p-bar"><i class="r" style="width:41%"></i></div>
+            <div class="p-sum">32 800 ₽ <span>из 80 000 ₽</span></div>
+            <span class="p-badge red">Долг: −1 200 ₽</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- СЛАЙД 2 ---------- -->
+  <section class="slide">
+    <div class="slide-inner">
+      <p class="kicker reveal">Боли аудитории</p>
+      <h2 class="reveal" style="--d:.06s">Знакомая ситуация?</h2>
+      <p class="lead reveal" style="--d:.12s">Люди хотят копить, но бросают. И вот четыре причины, которые мы слышим чаще всего.</p>
+      <div class="grid">
+        <div class="card reveal" style="--d:.18s">
+          <div class="card-icon ci-blue"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></div>
+          <h3>«Непонятно, успеваю я или нет»</h3>
+          <p>Деньги лежат в банковской копилке, но нет ясности: хватит ли их к нужной дате и не пора ли бить тревогу.</p>
+        </div>
+        <div class="card reveal" style="--d:.24s">
+          <div class="card-icon ci-gray"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></svg></div>
+          <h3>«Неудобно кидать мелочь каждый день»</h3>
+          <p>Откладывать по 435 ₽ ежедневно утомительно, а при редких крупных пополнениях полностью теряется ритм.</p>
+        </div>
+        <div class="card reveal" style="--d:.3s">
+          <div class="card-icon ci-red"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="m12 13-1-1 2-2-3-3 2-2"/></svg></div>
+          <h3>«Чувство вины за срывы»</h3>
+          <p>Жёсткие трекеры бюджета наказывают за любой форс-мажор — и человек просто удаляет приложение.</p>
+        </div>
+        <div class="card reveal" style="--d:.36s">
+          <div class="card-icon ci-green"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg></div>
+          <h3>«Страх утечки данных»</h3>
+          <p>Не хочется привязывать реальные банковские счета и карты к сторонним сервисам ради простой копилки.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- СЛАЙД 3 ---------- -->
+  <section class="slide">
+    <div class="slide-inner">
+      <p class="kicker reveal">Решение</p>
+      <h2 class="reveal" style="--d:.06s">Одна формула вместо скучной бухгалтерии</h2>
+      <p class="lead reveal" style="--d:.12s">Хотите в отпуск 1 июля и нужно 100 000 ₽? Приложение делит сумму на оставшиеся дни и показывает вашу ежедневную норму.</p>
+
+      <div class="formula-card card reveal" style="--d:.2s">
+        <div class="f-row"><span>Цель</span><b>Отпуск, 1 июля</b></div>
+        <div class="f-row"><span>Нужно накопить</span><b>100 000 ₽</b></div>
+        <div class="f-row"><span>Осталось дней</span><b>230</b></div>
+        <div class="f-div"></div>
+        <div class="f-eq">100 000 ₽ ÷ 230 дней = <span class="blue">435 ₽/день</span></div>
+      </div>
+
+      <div class="reserve-card reveal" style="--d:.28s">
+        <div class="card-icon ci-green"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>
+        <div>Отложили сразу <b>5 000 ₽</b>? Вы создали запас прочности на <b class="green">11 дней вперёд</b>. Приложение всегда показывает чёткий статус:</div>
+      </div>
+
+      <div class="status-chips reveal" style="--d:.34s">
+        <span class="chip chip-green"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg> Вы в плюсе</span>
+        <span class="chip chip-red"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/><polyline points="16 17 22 17 22 11"/></svg> Должны сами себе</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- СЛАЙД 4 ---------- -->
+  <section class="slide">
+    <div class="slide-inner">
+      <p class="kicker reveal">Уникальная фича</p>
+      <h2 class="reveal" style="--d:.06s">Жизнь бывает непредсказуемой. Мы это учли.</h2>
+      <p class="lead reveal" style="--d:.12s">Форс-мажор или снятие денег с цели — не повод удалять приложение. Вот как работает прозрачный дефицит.</p>
+
+      <div class="bullets">
+        <div class="bullet reveal" style="--d:.18s">
+          <span class="bi"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+          <p>Если возник дефицит, приложение <b>не ломает ваш график принудительно</b> и не читает мораль.</p>
+        </div>
+        <div class="bullet reveal" style="--d:.24s">
+          <span class="bi"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+          <p>Вы сами выбираете: оставить долг перед собой (и закрыть его с ближайшей премии) <b>или пересчитать ежедневный платёж</b>.</p>
+        </div>
+        <div class="bullet reveal" style="--d:.3s">
+          <span class="bi"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+          <p><b>100% прозрачность:</b> ещё до нажатия кнопки вы видите точный предпросмотр — на сколько рублей вырастет взнос.</p>
+        </div>
+      </div>
+
+      <div class="recalc-mock reveal" style="--d:.38s" aria-hidden="true">
+        <div class="rm-head"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg> Прозрачный пересчёт</div>
+        <div class="rm-debt">Долг перед собой: <b class="red">−1 200 ₽</b></div>
+        <div class="rm-preview">Разбить на 180 оставшихся дней? Платёж станет <b>442 ₽/день</b> вместо 435 ₽/день <span class="red">(+7 ₽)</span>.</div>
+        <div class="rm-btns"><span class="rm-btn ghost">Оставить долг</span><span class="rm-btn red">Пересчитать</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- СЛАЙД 5 ---------- -->
+  <section class="slide">
+    <div class="slide-inner">
+      <p class="kicker reveal">Мультивалютность</p>
+      <h2 class="reveal" style="--d:.06s">Все мечты под контролем на одном экране</h2>
+      <p class="lead reveal" style="--d:.12s">Копите на ремонт в рублях, а на путешествие — в долларах или евро. Приложение не путает валюты и аккуратно группирует сводку по каждой.</p>
+
+      <div class="dash-mock reveal" style="--d:.2s" aria-hidden="true">
+        <div>
+          <div class="dm-title">₽ · Рублёвые цели</div>
+          <div class="dm-row"><span>Накоплено</span><b>69 650 ₽ из 180 000 ₽</b></div>
+          <div class="p-bar"><i class="g" style="width:39%"></i></div>
+          <div class="dm-status green"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg> Впереди графика: +4 565 ₽</div>
+        </div>
+        <div>
+          <div class="dm-title">€ · Валютные цели</div>
+          <div class="dm-row"><span>Накоплено</span><b>640 € из 1 200 €</b></div>
+          <div class="p-bar"><i class="r" style="width:53%"></i></div>
+          <div class="dm-status red"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/><polyline points="16 17 22 17 22 11"/></svg> Долг: −60 € · цель поднята наверх</div>
+        </div>
+      </div>
+
+      <div class="reserve-card reveal" style="--d:.3s">
+        <div class="card-icon ci-blue"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+        <div><b>Умный фокус:</b> цели с отставанием автоматически поднимаются наверх списка — вы всегда держите руку на пульсе.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- СЛАЙД 6 ---------- -->
+  <section class="slide">
+    <div class="slide-inner">
+      <p class="kicker reveal">Приватность</p>
+      <h2 class="reveal" style="--d:.06s">Ваши финансы — только в вашем телефоне</h2>
+      <p class="lead reveal" style="--d:.12s">Мы спроектировали приложение так, чтобы ему можно было доверять даже самые личные мечты.</p>
+
+      <div class="feat-rows">
+        <div class="feat reveal" style="--d:.18s">
+          <div class="card-icon ci-blue"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="17" y1="8" x2="22" y2="13"/><line x1="22" y1="8" x2="17" y2="13"/></svg></div>
+          <div><b>Без регистрации, СМС и паролей</b><span>Открыли — и уже копите. Никаких анкет и подтверждений.</span></div>
+        </div>
+        <div class="feat reveal" style="--d:.24s">
+          <div class="card-icon ci-red"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><path d="m3 3 18 18"/></svg></div>
+          <div><b>Без доступа к картам и счетам</b><span>Приложение физически не может увидеть ваши банковские данные.</span></div>
+        </div>
+        <div class="feat reveal" style="--d:.3s">
+          <div class="card-icon ci-gray"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h.01"/><path d="M8.5 16.4a5 5 0 0 1 7 0"/><path d="M5 12.86a10 10 0 0 1 5.17-2.69"/><path d="M19 12.86a10 10 0 0 0-2-1.52"/><path d="M2 8.82a15 15 0 0 1 4.18-2.64"/><path d="M22 8.82a15 15 0 0 0-11.29-3.76"/><line x1="2" y1="2" x2="22" y2="22"/></svg></div>
+          <div><b>Полностью без интернета</b><span>Мгновенный запуск и работа в офлайне: в метро, в самолёте, на даче.</span></div>
+        </div>
+        <div class="feat reveal" style="--d:.36s">
+          <div class="card-icon ci-green"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
+          <div><b>Бэкап в один клик</b><span>Файлом или текстовым кодом — отправьте себе в «Избранное» в Telegram и перенесите на новый смартфон.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- СЛАЙД 7 ---------- -->
+  <section class="slide">
+    <div class="slide-inner">
+      <p class="kicker reveal">Аудитория</p>
+      <h2 class="reveal" style="--d:.06s">Для кого это приложение</h2>
+      <p class="lead reveal" style="--d:.12s">Четыре живых сценария, в которых «Хочу-хочу-хочу» окупается с первого месяца.</p>
+      <div class="grid">
+        <div class="card reveal" style="--d:.18s">
+          <div class="card-icon ci-blue"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/></svg></div>
+          <h3>Путешественники</h3>
+          <p>Отпуск на море к конкретной дате — без кредитов и переплат за срочность.</p>
+        </div>
+        <div class="card reveal" style="--d:.24s">
+          <div class="card-icon ci-gray"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg></div>
+          <h3>Рациональные покупатели</h3>
+          <p>Новый смартфон, техника или авто — планово, а не импульсивно и в рассрочку.</p>
+        </div>
+        <div class="card reveal" style="--d:.3s">
+          <div class="card-icon ci-green"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <h3>Семьи</h3>
+          <p>Ремонт, обучение детей или крупный праздник — общая мечта с понятным планом.</p>
+        </div>
+        <div class="card reveal" style="--d:.36s">
+          <div class="card-icon ci-red"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9m16 0H4m16 0 1.28 2.44a1 1 0 0 1-.9 1.56H3.62a1 1 0 0 1-.9-1.56L4 16"/></svg></div>
+          <h3>Фрилансеры</h3>
+          <p>Неравномерный доход — не проблема: внесли гонорар и видите, на сколько недель закрыт план.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- СЛАЙД 8 ---------- -->
+  <section class="slide">
+    <div class="slide-inner">
+      <svg class="logo-lg reveal" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect class="logo-bg" width="64" height="64" rx="14" fill="#000"/>
+        <path fill="#FFF" fill-rule="evenodd" d="M24 12 C15 14 8 21 6 30 L10 33 L5 37 C9 46 17 51 27 51 C23 44 21 37 21 31 C21 24 22 18 24 12 Z M16.5 26 a3 3 0 1 1 -6 0 a3 3 0 1 1 6 0 Z"/>
+        <g fill="none" stroke="#FFF" stroke-linecap="round">
+          <path stroke-width="3" d="M33 14 C29 25 29 39 31 50"/>
+          <path stroke-width="2.8" d="M40 16 C36.5 26 36.5 38 38 48"/>
+          <path stroke-width="2.6" d="M46 19 C43 27 43 37 44.5 45"/>
+          <path stroke-width="2.4" d="M51 22 C48.5 28 48.5 36 50 42"/>
+          <path stroke-width="2.2" d="M55.5 25 C53.5 29 53.5 35 55 39"/>
+        </g>
+        <path fill="#FFF" d="M57.5 28 L63 22 L61 32 Z M57.5 36 L63 42 L61 32 Z"/>
+      </svg>
+      <h2 class="reveal" style="--d:.08s">Мечта становится планом,<br>когда у неё есть сумма и срок.</h2>
+      <div class="thesis reveal" style="--d:.16s">
+        <span class="pill pill-blue">Прозрачно.</span>
+        <span class="pill pill-green">Без стресса.</span>
+        <span class="pill pill-gray">Конфиденциально.</span>
+      </div>
+      <p class="lead reveal" style="--d:.22s">Скачайте, создайте первую цель за минуту — и пусть каждое «хочу» однажды станет «смог».</p>
+      <div class="cta-row reveal" style="--d:.3s">
+        <a class="btn btn-primary" href="https://github.io" target="_blank" rel="noopener">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+          Попробовать приложение
+        </a>
+        <button class="btn btn-secondary" id="toStart" type="button">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+          В начало презентации
+        </button>
+      </div>
+      <p class="foot-note reveal" style="--d:.36s">«Хочу-хочу-хочу» · офлайн · ₽ $ € · без регистрации и банковских подключений</p>
+    </div>
+  </section>
+
+</div>
+</main>
+
+<!-- ================= НИЖНЯЯ НАВИГАЦИЯ ================= -->
+<footer class="navbar">
+  <button id="prevBtn" class="nav-btn" type="button" aria-label="Назад">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+  </button>
+  <div class="nav-center">
+    <span class="prog-text" id="progText">1 / 8</span>
+    <div class="prog-line"><i id="progBar" style="width:12.5%"></i></div>
+  </div>
+  <button id="nextBtn" class="nav-btn" type="button" aria-label="Вперёд">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+  </button>
+</footer>
+
+<script>
+'use strict';
+
+var TOTAL = 8;
+var idx = 0;
+var mode = 'slides';
+
+var deck = document.getElementById('deck');
+var viewport = document.getElementById('viewport');
+var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+var prevBtn = document.getElementById('prevBtn');
+var nextBtn = document.getElementById('nextBtn');
+var progText = document.getElementById('progText');
+var progBar = document.getElementById('progBar');
+var modeSlidesBtn = document.getElementById('modeSlides');
+var modeFeedBtn = document.getElementById('modeFeed');
+var themeBtn = document.getElementById('themeBtn');
+var toStartBtn = document.getElementById('toStart');
+
+var ICON_SUN = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>';
+var ICON_MOON = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>';
+
+/* ---------- ТЕМА ---------- */
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme', t);
+  themeBtn.innerHTML = (t === 'dark') ? ICON_SUN : ICON_MOON;
+  var meta = document.querySelector('meta[name="theme-color"]');
+  if(meta) meta.setAttribute('content', t === 'dark' ? '#000000' : '#F2F2F7');
+}
+function currentTheme(){
+  var stored = null;
+  try{ stored = localStorage.getItem('hochu_pres_theme'); }catch(e){}
+  if(stored === 'dark' || stored === 'light') return stored;
+  return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+}
+applyTheme(currentTheme());
+themeBtn.addEventListener('click', function(){
+  var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  applyTheme(next);
+  try{ localStorage.setItem('hochu_pres_theme', next); }catch(e){}
+});
+
+/* ---------- НАВИГАЦИЯ ---------- */
+function updateNav(){
+  progText.textContent = (idx + 1) + ' / ' + TOTAL;
+  progBar.style.width = (((idx + 1) / TOTAL) * 100) + '%';
+  prevBtn.disabled = (idx === 0);
+  nextBtn.disabled = (idx === TOTAL - 1);
+}
+
+function setActive(i){
+  slides.forEach(function(s, k){
+    if(k === i) s.classList.add('active');
+    else if(mode === 'slides') s.classList.remove('active');
+  });
+}
+
+function go(i, smooth){
+  idx = Math.max(0, Math.min(TOTAL - 1, i));
+  if(mode === 'slides'){
+    deck.style.transform = 'translateX(-' + (idx * 100) + '%)';
+  } else {
+    slides[idx].scrollIntoView({ behavior: (smooth === false ? 'auto' : 'smooth'), block: 'start' });
+  }
+  setActive(idx);
+  updateNav();
+}
+
+prevBtn.addEventListener('click', function(){ go(idx - 1); });
+nextBtn.addEventListener('click', function(){ go(idx + 1); });
+toStartBtn.addEventListener('click', function(){ go(0); });
+
+/* ---------- РЕЖИМЫ: СЛАЙДЫ / ЛЕНТА ---------- */
+function setMode(m){
+  mode = m;
+  document.body.classList.toggle('feed', m === 'feed');
+  modeSlidesBtn.classList.toggle('on', m === 'slides');
+  modeFeedBtn.classList.toggle('on', m === 'feed');
+  if(m === 'slides'){
+    viewport.scrollTop = 0;
+    slides.forEach(function(s){ s.scrollTop = 0; });
+    deck.style.transform = 'translateX(-' + (idx * 100) + '%)';
+    setActive(idx);
+  } else {
+    deck.style.transform = '';
+    setTimeout(function(){ go(idx, false); }, 30);
+  }
+  updateNav();
+}
+modeSlidesBtn.addEventListener('click', function(){ setMode('slides'); });
+modeFeedBtn.addEventListener('click', function(){ setMode('feed'); });
+
+/* ---------- КЛАВИАТУРА ---------- */
+document.addEventListener('keydown', function(e){
+  if(e.key === 'ArrowRight' || e.key === 'PageDown'){ e.preventDefault(); go(idx + 1); }
+  else if(e.key === 'ArrowLeft' || e.key === 'PageUp'){ e.preventDefault(); go(idx - 1); }
+  else if(e.key === 'Home'){ e.preventDefault(); go(0); }
+  else if(e.key === 'End'){ e.preventDefault(); go(TOTAL - 1); }
+});
+
+/* ---------- СВАЙПЫ (только в режиме слайдов) ---------- */
+var tx = 0, ty = 0, tracking = false;
+viewport.addEventListener('touchstart', function(e){
+  if(mode !== 'slides') return;
+  tracking = true;
+  tx = e.touches[0].clientX;
+  ty = e.touches[0].clientY;
+}, { passive: true });
+viewport.addEventListener('touchend', function(e){
+  if(!tracking || mode !== 'slides') return;
+  tracking = false;
+  var dx = e.changedTouches[0].clientX - tx;
+  var dy = e.changedTouches[0].clientY - ty;
+  if(Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.2){
+    if(dx < 0) go(idx + 1); else go(idx - 1);
+  }
+}, { passive: true });
+
+/* ---------- ЛЕНТА: следим за текущим слайдом при прокрутке ---------- */
+if('IntersectionObserver' in window){
+  var io = new IntersectionObserver(function(entries){
+    if(mode !== 'feed') return;
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        var k = slides.indexOf(entry.target);
+        if(k >= 0){
+          idx = k;
+          entry.target.classList.add('active');
+          updateNav();
+        }
+      }
+    });
+  }, { root: viewport, threshold: 0.4 });
+  slides.forEach(function(s){ io.observe(s); });
+}
+
+/* ---------- СТАРТ ---------- */
+go(0, false);
+</script>
+</body>
+</html>
